@@ -1,0 +1,57 @@
+muscle:
+  app: ./bin/muscle
+  parameters: []
+
+mafft:
+  app: ./bin/mafft
+  parameters: []
+
+clustalo:
+  app: ./bin/clustalo
+  parameters: []
+
+trimal:
+  app: ./bin/trimal
+  parameters: []
+  
+tcoffee:
+  app: ./bin/tcoffee
+  parameters: []
+
+raxml-pthreads:
+  app: ./bin/raxmlHPC-PTHREADS-SSE3
+  parameters: []
+
+raxml:
+  app: ./bin/raxmlHPC-SSE3
+  parameters: []
+
+dialigntx:
+  app: ./bin/dialign-tx
+  parameters: []
+  
+FastTree:
+  app: ./bin/FastTree
+  parameters: []
+
+pmodeltest:
+  app: ./bin/pmodeltest.py
+  parameters: []
+
+prank:
+  app: ./bin/prank #will not work
+  parameters: []
+  
+probcons:
+  app: ./bin/probcons #will not work
+  parameters: []
+  
+kalign:
+  app: ./bin/kalign
+  parameters: []
+    
+iqtree:
+  app: ./bin/iqtree
+  parameters: []
+    
+  
