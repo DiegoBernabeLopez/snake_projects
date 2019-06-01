@@ -1,3 +1,7 @@
+in: .test/test.fa
+out: .test/test.fa.fa.nw
+
+
 muscle:
   app: ./bin/muscle
   parameters: []
@@ -30,7 +34,7 @@ dialigntx:
   app: ./bin/dialign-tx
   parameters: []
   
-FastTree:
+fasttree:
   app: ./bin/FastTree
   parameters: []
 

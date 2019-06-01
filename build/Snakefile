@@ -1,0 +1,30 @@
+# As standard, snakemake workflows execute this snakefile who imports all necesary rules by include command.
+# Rule all is executed which causes the workflow to generate all the files under all rule input statement.
+
+import os
+
+dirname=".test"
+try:
+    os.mkdir(dirname)
+    print("Directory " , dirname ,  " Created ") 
+except FileExistsError:
+    print("Directory " , dirname ,  " already exists")
+
+
+
+SAMPLES=config['in']
+sample=expand("{sample}", sample=SAMPLES)
+
+
+
+rule all:
+    input:
+        config['out']
+        
+
+include: "rules/clustalo.smk"
+include: "rules/fasttree.smk"
+
+
+
+#expand("{tree}",tree=config['out'])
