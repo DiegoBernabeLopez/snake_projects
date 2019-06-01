@@ -13,18 +13,14 @@ except FileExistsError:
 
 
 SAMPLES=config['in']
-sample=expand("{sample}", sample=SAMPLES)
+TREES=config['out']
 
 
 
 rule all:
     input:
-        config['out']
+        TREES
         
 
 include: "rules/clustalo.smk"
 include: "rules/fasttree.smk"
-
-
-
-#expand("{tree}",tree=config['out'])

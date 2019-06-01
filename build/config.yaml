@@ -1,5 +1,5 @@
-in: .test/test.fa
-out: .test/test.fa.fa.nw
+in: [.test/test.fa, .test/test2.fa]
+out: [.test/test.fa.fa.nw, .test/test2.fa.fa.nw]
 
 
 muscle:

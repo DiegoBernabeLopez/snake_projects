@@ -1,8 +1,8 @@
 rule clustalomega:
     input:
-        "{sample}"
+        "{SAMPLES}"
     output:
-        "{sample}.fa"
+        "{SAMPLES}.fa"
     params:
         app=config['clustalo']['app'],
         parameters=config['clustalo']['parameters']
