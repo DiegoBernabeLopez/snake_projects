@@ -1,10 +1,10 @@
-in: [.test/test.fa, .test/test2.fa]
-out: [.test/test.fa.fa.nw, .test/test2.fa.fa.nw]
+in: [.test/test1.fa,.test/test2.fa,.test/test3.fa]
+out: [] #unused
 
 
 muscle:
   app: ./bin/muscle
-  parameters: []
+  parameters: [--auto]
 
 mafft:
   app: ./bin/mafft
@@ -36,7 +36,7 @@ dialigntx:
   
 fasttree:
   app: ./bin/FastTree
-  parameters: []
+  parameters: [-quiet]
 
 pmodeltest:
   app: ./bin/pmodeltest.py

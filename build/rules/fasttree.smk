@@ -1,8 +1,8 @@
 rule fasttree:
     input:
-        "{sample}.fa"
+        "{SAMPLES}.fa"
     output:
-        "{sample}.fa.nw"
+        "{SAMPLES}.fa.nw"
     params:
         app=config['fasttree']['app'],
         parameters=config['fasttree']['parameters']

@@ -13,13 +13,12 @@ except FileExistsError:
 
 
 SAMPLES=config['in']
-TREES=config['out']
 
 
 
 rule all:
     input:
-        TREES
+        expand("{sample}.fa.nw",sample=config['in'])
         
 
 include: "rules/clustalo.smk"
