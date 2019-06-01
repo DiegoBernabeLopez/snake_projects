@@ -1,4 +1,4 @@
-in: [.test/test1.fa,.test/test2.fa,.test/test3.fa]
+in: [.test/test1.fa,.test/test2.fa]
 out: [] #unused
 
 
