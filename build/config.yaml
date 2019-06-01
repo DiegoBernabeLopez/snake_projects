@@ -1,10 +1,10 @@
 in: [.test/test1.fa,.test/test2.fa]
 out: [] #unused
-
+work: []
 
 muscle:
   app: ./bin/muscle
-  parameters: [--auto]
+  parameters: []
 
 mafft:
   app: ./bin/mafft
@@ -48,6 +48,10 @@ prank:
   
 probcons:
   app: ./bin/probcons #will not work
+  parameters: []
+  
+phyml:
+  app: ./bin/phyml
   parameters: []
   
 kalign:
