@@ -11,8 +11,11 @@ except FileExistsError:
     print("Directory " , dirname ,  " already exists")
 
 
+configfile: "config.yaml"
+
 
 SAMPLES=config['in']
+
 
 
 
