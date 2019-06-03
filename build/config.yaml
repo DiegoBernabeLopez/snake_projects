@@ -1,6 +1,6 @@
 in: [.test/test1.fa,.test/test2.fa]
 out: [] #unused
-work: []
+work: ['clustalo','fasttree']
 
 muscle:
   app: ./bin/muscle

@@ -1,8 +1,13 @@
+
+idx=config['work'].index('phyml')
+print(config['work'][0])
+suffix = "." + config['work'][(idx-1)] if idx > 0 else ''
+
 rule phyml:
     input:
-        "{SAMPLES}.fa"
+        "{SAMPLES}" + suffix
     output:
-        "{SAMPLES}.fa.nw"
+        "{SAMPLES}.phyml"
     params:
         app=config['phyml']['app'],
         parameters=config['phyml']['parameters']

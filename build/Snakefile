@@ -11,7 +11,9 @@ try:
 except FileExistsError:
     print("Directory " , dirname ,  " already exists")
 
-
+for i in config['work']:
+	if i != "" or i!= "none":
+		include: "rules/" + i + ".smk"		
 
 
 SAMPLES=config['in']
@@ -21,8 +23,4 @@ print(config.keys())
 
 rule all:
     input:
-        expand("{sample}.fa.nw",sample=config['in'])
-        
-
-include: "rules/clustalo.smk"
-include: "rules/fasttree.smk"
+        expand("{sample}.{suffix}",sample=SAMPLES,suffix=config['work'][-1])

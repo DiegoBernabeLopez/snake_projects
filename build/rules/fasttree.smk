@@ -1,8 +1,13 @@
+
+idx=config['work'].index('fasttree')
+print(config['work'][0])
+suffix = "." + config['work'][(idx-1)] if idx > 0 else ''
+
 rule fasttree:
     input:
-        "{SAMPLES}.fa"
+        "{SAMPLES}" + suffix
     output:
-        "{SAMPLES}.fa.nw"
+        "{SAMPLES}.fasttree"
     params:
         app=config['fasttree']['app'],
         parameters=config['fasttree']['parameters']
