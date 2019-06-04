@@ -1,5 +1,5 @@
-idx=config['work'].index('clustalo')
-print(config['work'][0])
+name='clustalo'
+idx=config['work'].index(name)
 suffix = "." + config['work'][(idx-1)]if idx > 0 else ''
 
 
@@ -7,9 +7,9 @@ rule clustalomega:
     input:
         "{SAMPLES}" + suffix
     output:
-        "{SAMPLES}.clustalo"
+        "{SAMPLES}." + name
     params:
-        app=config['clustalo']['app'],
-        parameters=config['clustalo']['parameters']
+        app=config[name]['app'],
+        parameters=config[name]['parameters']
     shell:
         '{params.app} -i {input} -o {output} {params.parameters}'

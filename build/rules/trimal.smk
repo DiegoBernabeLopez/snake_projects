@@ -1,9 +1,10 @@
-name='phyml'
+name='trimal'
 
 idx=config['work'].index(name)
-suffix = "." + config['work'][(idx-1)] if idx > 0 else ''
+suffix = "." + config['work'][(idx-1)]if idx > 0 else ''
 
-rule phyml:
+
+rule trimal:
     input:
         "{SAMPLES}" + suffix
     output:
@@ -12,4 +13,4 @@ rule phyml:
         app=config[name]['app'],
         parameters=config[name]['parameters']
     shell:
-        '{params.app} -i {input} {params.parameters} > {output}'
+        '{params.app} -in {input} -out {output} {params.parameters}'
