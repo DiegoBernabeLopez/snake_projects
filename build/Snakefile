@@ -36,12 +36,12 @@ while expand_flag==True:
             work_.append(v)
                    
     work=work_
-    config["work"]=work
+    
+config["work"]=work
 
     
     
-print("Work to do: ", config['work'])
-raise Exception('My error!')    
+print("Work to do: ", config['work']) 
 
 
 #Load required rules
