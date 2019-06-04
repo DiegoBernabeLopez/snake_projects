@@ -1,6 +1,6 @@
 in: [.test/test1.fa,.test/test2.fa]
 out: [] #unused
-work: [clustalo, trimal]
+work: [standard_fasttree]
 
 muscle:
   app: ./bin/muscle
@@ -63,3 +63,10 @@ iqtree:
   parameters: []
     
   
+dictionary:
+  standard_fasttree:
+    clustalo: []
+    fasttree: [-pseudo , -mlacc 3, -slownni]
+  draft:
+    AAA: []
+    BBB: []

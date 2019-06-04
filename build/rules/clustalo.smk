@@ -1,4 +1,5 @@
 name='clustalo'
+
 idx=config['work'].index(name)
 suffix = "." + config['work'][(idx-1)]if idx > 0 else ''
 
