@@ -1,6 +1,6 @@
 in: [.test/test1.fa,.test/test2.fa]
-out: [] #unused
-work: [standard_fasttree,clustalo]
+
+work: standard_fasttree
 
 muscle:
   app: ./bin/muscle
@@ -36,7 +36,7 @@ dialigntx:
   
 fasttree:
   app: ./bin/FastTree
-  parameters: [-quiet]
+  parameters: []
 
 pmodeltest:
   app: ./bin/pmodeltest.py
@@ -64,7 +64,76 @@ iqtree:
     
   
 predefined:
-  standard_fasttree: [clustalo,fasttree_default] 
+    
+  ### WORKFLOWS  ###
+
+  #Genetree meta workflows
+  phylomedb4: [metaligner_phylomedb, trimal01, prottest_default, phyml_default]
+  eggnog41: [metaligner_trimmed, trimal01]
+  ensembl_small: [mcoffee_ensembl,treebest_ensembl]
+  ensembl_large: [mafft_linsi,treebest_ensembl]
+
+  full_modeltest: [clustalo_default,pmodeltest_full_slow,phyml_default]
+  full_modeltest_bootstrap: [clustalo_default,pmodeltest_full_slow,phyml_default_bootstrap]
+  full_fast_modeltest: [clustalo_default,pmodeltest_full_fast,phyml_default]
+  full_fast_modeltest_bootstrap: [clustalo_default,pmodeltest_full_fast,phyml_default_bootstrap]
+  full_ultrafast_modeltest: [clustalo_default,pmodeltest_full_ultrafast,phyml_default]
+  full_ultrafast_modeltest_bootstrap: [clustalo_default,pmodeltest_full_ultrafast,phyml_default_bootstrap]
+
+  soft_modeltest: [clustalo_default, pmodeltest_soft_slow, phyml_default]
+  soft_modeltest_bootstrap: [clustalo_default, pmodeltest_soft_slow, phyml_default_bootstrap]
+  soft_fast_modeltest: [clustalo_default, pmodeltest_soft_fast, phyml_default]
+  soft_fast_modeltest_bootstrap: [clustalo_default, pmodeltest_soft_fast, phyml_default_bootstrap]
+  soft_ultrafast_modeltest: [clustalo_default, pmodeltest_soft_ultrafast, phyml_default]
+  soft_ultrafast_modeltest_bootstrap: [clustalo_default, pmodeltest_soft_ultrafast, phyml_default_bootstrap]
+
+  standard_raxml: [clustalo_default, raxml_default]
+  standard_raxml_bootstrap: [clustalo_default, raxml_default_bootstrap]
+  standard_phyml: [clustalo_default, phyml_default]
+  standard_phyml_bootstrap: [clustalo_default, phyml_default_bootstrap]
+  standard_fasttree: [clustalo_default, fasttree_default] 
+
+  standard_trimmed_raxml: [clustalo_default, trimal01, raxml_default]
+  standard_trimmed_raxml_bootstrap: [clustalo_default, trimal01, raxml_default_bootstrap]
+  standard_trimmed_phyml: [clustalo_default, trimal01, phyml_default]
+  standard_trimmed_phyml_bootstrap: [clustalo_default, trimal01, phyml_default_bootstrap]
+  standard_trimmed_fasttree: [clustalo_default, trimal01, fasttree_full]
+
+  c_iqtree_bestmodel: [clustalo_default, iqtree_bestmodel]
+  c_iqtree_codon_bestmodel: [clustalo_default, iqtree_codon_bestmodel]
+  c_iqtree_codon: [clustalo_default, iqtree_codon_default]
+
+  #Supermatrix meta workflows
+  sptree_fasttree_100: [cog_100, alg_concat_default, fasttree_full]
+  sptree_fasttree_95: [cog_95, alg_concat_default, fasttree_full]
+  sptree_fasttree_90: [cog_90, alg_concat_default, fasttree_full]
+  sptree_fasttree_85: [cog_85, alg_concat_default, fasttree_full]
+  sptree_fasttree_all: [cog_all, alg_concat_default, fasttree_full]
+
+  sptree_raxml_100: [cog_100, alg_concat_default, raxml_default]
+  sptree_raxml_95: [cog_95, alg_concat_default, raxml_default]
+  sptree_raxml_90: [cog_90, alg_concat_default, raxml_default]
+  sptree_raxml_85: [cog_85, alg_concat_default, raxml_default]
+  sptree_raxml_all: [cog_all, alg_concat_default, raxml_default]
+
+  sptree_iqtreeC10_all: [cog_all, alg_concat_default, iqtree_C10]
+  sptree_iqtree_all: [cog_all, alg_concat_default, iqtree_default]
+
+  
+  ### APP CONFIG ###
+  
   fasttree_default: 
     app: fasttree
     parameters: [-pseudo, mlacc 3, -slownni]
+  
+  raxml_default:
+    app: raxml
+    parameters: [-f d -p 31416]
+  
+  phyml_default:
+    app: phyml
+    parameters: [--pinv e --alpha e --nclases 4 -o tlr -f m --bootstrap -2]
+  
+  phyml_default_bootstrap:
+    app: phyml
+    parameters: [--pinv e --alpha e --nclases 4 -o tlr -f m --bootstrap 100]

@@ -33,7 +33,7 @@ while expand_flag == True:
             if type(config['predefined'][i]) == dict:
                 work.append(config['predefined'][i]['app'])
                 app= config['predefined'][i]['app']   
-                config[app]['parameters'].extend(config['predefined'][i]['parameters'])
+                config[app]['parameters'] = config['predefined'][i]['parameters']
             
             #If it contains other predefined workflows
             elif type(config['predefined'][i]) == list:
