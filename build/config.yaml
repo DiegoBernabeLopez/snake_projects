@@ -126,6 +126,10 @@ predefined:
     app: fasttree
     parameters: [-pseudo, mlacc 3, -slownni]
   
+  clustalo_default:
+    app: clustalo
+    parameters: []
+
   raxml_default:
     app: raxml
     parameters: [-f d -p 31416]
