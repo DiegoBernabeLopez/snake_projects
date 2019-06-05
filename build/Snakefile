@@ -14,11 +14,11 @@ except FileExistsError:
     print("Directory " , dirname ,  " already exists")
 
 
-#transform possible string inputs to array
-config['work'] = eval('[ config["work"] ]') if type(config['work']) == str else config['work']
+#Parse work configuration
+config['work'] = config["work"].split(",") if type(config['work']) == str else config['work']
 print("Work input:", config['work']) 
 
-#check, translate and load predefined workflows in configfile
+#Check, translate and load predefined workflows from configfile
 expand_flag=True
 while expand_flag == True:
     expand_flag = False
