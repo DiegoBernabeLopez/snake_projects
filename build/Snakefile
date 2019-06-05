@@ -23,18 +23,25 @@ expand_flag=True
 while expand_flag == True:
     expand_flag = False
     work = []
-    for v in config['work']:
-        if config['dictionary'].get(v) != None and type(config['dictionary'][v]) == list:
+    for i in config['work']:
+        
+        #If there is a predefined workflow
+        if config['predefined'].get(i) != None:
             expand_flag = True
-            work += config['dictionary'][v]
-        elif config['dictionary'].get(v) != None and not type(config['dictionary'][v]) == list:
-            expand_flag = True
-            for p in list(config['dictionary'][v].keys()):
-                work.append(p)
-                if config['dictionary'].get(p) == None: 
-                    config[p]['parameters'].extend(config['dictionary'][v][p])
+            
+            #If it configures an app
+            if type(config['predefined'][i]) == dict:
+                work.append(config['predefined'][i]['app'])
+                app= config['predefined'][i]['app']   
+                config[app]['parameters'].extend(config['predefined'][i]['parameters'])
+            
+            #If it contains other predefined workflows
+            elif type(config['predefined'][i]) == list:
+                work += config['predefined'][i]
+        
+        #If it is not a predefined workflow
         else:
-            work.append(v)
+            work.append(i)
     config['work'] = work
     
 

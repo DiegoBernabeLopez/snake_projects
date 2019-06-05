@@ -63,14 +63,8 @@ iqtree:
   parameters: []
     
   
-dictionary:
-  standard_fasttree:
-    clustalo: [--auto]
-    fasttree_default: 
-  fasttree_default:
-    fasttree: [-pseudo, mlacc 3, -slownni]
-  phyml_default:
-    phyml: [-a, -b]
-  draft:
-    AAA: []
-    BBB: []
+predefined:
+  standard_fasttree: [clustalo,fasttree_default] 
+  fasttree_default: 
+    app: fasttree
+    parameters: [-pseudo, mlacc 3, -slownni]
