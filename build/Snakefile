@@ -15,29 +15,27 @@ except FileExistsError:
 
 
 #transform possible string inputs to array
-work = eval('[ config["work"] ]') if type(config['work']) == str else config['work']
+config['work'] = eval('[ config["work"] ]') if type(config['work']) == str else config['work']
 
 
 #check for standard workflows
 
 expand_flag=True
-while expand_flag==True:
-    expand_flag=False
-    work_=[]
-    for i, v in enumerate(work):
+while expand_flag == True:
+    expand_flag = False
+    work = []
+    for v in config['work']:
         if config['dictionary'].get(v) != None and type(config['dictionary'][v]) == list:
-            work_ += config['dictionary'][v]
-            expand_flag=True
+            work += config['dictionary'][v]
+            expand_flag = True
         elif config['dictionary'].get(v) != None and not type(config['dictionary'][v]) == list:
             for p in list(config['dictionary'][v].keys()):
-                work_.append(p)
+                work.append(p)
                 config[p]['parameters'].extend(config['dictionary'][v][p])
         else:
-            work_.append(v)
+            work.append(v)
                    
-    work=work_
-    
-config["work"]=work
+    config['work'] = work
 
     
     
