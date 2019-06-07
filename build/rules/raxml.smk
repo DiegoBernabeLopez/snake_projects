@@ -1,4 +1,4 @@
-name='muscle'
+name='raxml'
 
 def get_suffix(name):
     idx=config['work'].index(name)
@@ -7,7 +7,7 @@ def get_suffix(name):
 suffix = get_suffix(name)
 
 
-rule muscle:
+rule raxml:
     input:
         "{SAMPLES}" + suffix
     output:
@@ -16,4 +16,4 @@ rule muscle:
         app=config[name]['app'],
         parameters=config[name]['parameters']
     shell:
-        '{params.app} -in {input} -out {output} {params.parameters}'
+        '{params.app} -s {input} -n {output} {params.parameters}'

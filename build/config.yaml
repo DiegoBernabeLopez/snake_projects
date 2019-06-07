@@ -1,6 +1,6 @@
 in: [.test/test1.fa,.test/test2.fa]
 
-work: standard_fasttree
+work: clustalo
 
 muscle:
   app: ./bin/muscle

@@ -1,7 +1,10 @@
 name='fasttree'
 
-idx=config['work'].index(name)
-suffix = "." + config['work'][(idx-1)] if idx > 0 else ''
+def get_suffix(name):
+    idx=config['work'].index(name)
+    return  ("." + config['work'][(idx-1)] if idx > 0 else '')
+
+suffix = get_suffix(name)
 
 rule fasttree:
     input:
