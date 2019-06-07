@@ -141,3 +141,36 @@ predefined:
   phyml_default_bootstrap:
     app: phyml
     parameters: [--pinv e --alpha e --nclases 4 -o tlr -f m --bootstrap 100]
+
+  iqtree_default:
+    app = iqtree
+    parameters: [ -alrt = 1000 -seed = 31416]
+
+  iqtree_bestmodel:
+    app = iqtree
+    parameters: [ -alrt = 1000 -seed = 31416 -m = TESTNEWONLY]
+
+  iqtree_codon_default:
+    app = iqtree
+    parameters: [ -alrt = 1000 -seed = 31416 -st = CODON]
+
+
+  iqtree_codon_bestmodel:
+    app = iqtree
+    parameters: [ -alrt = 1000 -seed = 31416 -st = CODON -m = TEST]
+
+
+  iqtree_C10:
+    app = iqtree
+    parameters: [ -alrt = 1000 -seed = 31416 -m = C10]
+
+
+  iqtree_C30:
+    app = iqtree
+    parameters: [ -alrt = 1000 -seed = 31416 -m = C30]
+
+
+  iqtree_C60:
+    app = iqtree
+    parameters: [ -alrt = 1000 -seed = 31416 -m = C60]
+

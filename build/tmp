@@ -1,0 +1,198 @@
+  metaligner_phylomedb:
+    app: metaligner
+    parameters: [_alg, _trimming True , _aligners  @muscle_default, @mafft_default, @clustalo_default, @dialigntx_default]
+
+  metaligner_trimmed:
+    app: metaligner
+    parameters: [_alg, _trimming True, _aligners  @muscle_default, @mafft_default, @clustalo_default]
+
+  metaligner_default:
+    app: metaligner
+    parameters: [_alg, _trimming  False , _aligners  @muscle_default, @mafft_default, @clustalo_default]
+
+  tcoffee_default:
+    app: tcoffee
+
+  mcoffee_ensembl:
+    app: tcoffee
+    parameters: [-method "mafftgins_msa,muscle_msa,kalign_msa,t_coffee_msa" -mode mcoffee]
+
+  trimal001:
+    app: trimal
+    parameters: [-gt 0.01]
+
+  trimal01:
+    app: trimal
+    parameters: [-gt 0.1]
+
+  trimal02:
+    app: trimal
+    parameters: [-gt 0.2]
+
+  trimal03:
+    app: trimal
+    parameters: [-gt 0.3]
+
+
+  trimal05:
+    app: trimal
+    parameters: [-gt 0.5]
+
+  trimal_gappyout:
+    app: trimal
+    parameters: [-gappyout]
+
+  muscle_default:
+    app: muscle
+    parameters: []
+
+  mafft_default:
+    app: mafft
+    parameters: [--auto]
+
+  mafft_einsi:
+    app: mafft
+    parameters: [--genafpair, , --maxiterate 1000]
+
+  mafft_linsi:
+    app: mafft
+    parameters: [--localpair, , --maxiterate 1000]
+
+  mafft_ginsi:
+    app: mafft
+    parameters: [--globalpair, , --maxiterate 1000]
+
+  clustalo_default:
+    app: clustalo
+    parameters: []
+
+  dialigntx_default:
+    app: dialigntx
+    parameters: []
+
+  prottest_default:
+    app: prottest
+    parameters: [_lk_mode "phyml" , _models "JTT", "WAG", "VT", "LG", "MtREV" -f m, , --pinv e, , --alpha e, , --nclasses 4, , --no_memory_check , --quiet]
+
+  pmodeltest_full, _ultrafast:
+    app: pmodeltest
+    parameters: [_aa_models  "all" , _nt_models  "all" , --fast , --noinv , --nogam , --nofrq]
+
+  pmodeltest_full, _fast:
+    app: pmodeltest
+    parameters: [_aa_models  "all" , _nt_models  "all" , --fast]
+
+  pmodeltest_full, _slow:
+    app: pmodeltest
+    parameters: [_aa_models  "all" , _nt_models  "all"]
+
+  pmodeltest_soft_ultrafast:
+    app: pmodeltest
+    parameters: [_aa_models  "JTT,WAG,VT,LG,MtREV" , _nt, _models  "GTR" , --fast , --noinv , --nogam]
+
+  pmodeltest, _soft, _fast:
+    app: pmodeltest
+    parameters: [_aa, _models  "JTT,WAG,VT,LG,MtREV" , _nt, _models  "GTR" , --fast]
+
+  pmodeltest, _soft, _slow:
+    app: pmodeltest
+    parameters: [_aa, _models  "JTT,WAG,VT,LG,MtREV" , _nt, _models  "GTR"]
+
+  bionj, _default:
+    app: phyml
+    parameters: [_aa, _model  JTT , _nt, _model  GTR , --pinv e , --alpha e , --nclasses 4 -o lr -f  m , --bootstrap -2]
+
+  fasttree, _default:
+    app: fasttree
+    parameters: []
+
+  fasttree, _full:
+    app: fasttree
+    parameters: [-pseudo -mlacc 3 -slownni] 
+
+  phyml, _default:
+    app: phyml
+    parameters: [_aa, _model  JTT , _nt, _model GTR , --pinv e , --alpha e , --nclasses 4 -o tlr -f m , --bootstrap -2] 
+
+  phyml, _default, _bootstrap:
+    app: phyml
+    parameters: [_aa, _model  JTT , _nt, _model GTR , --pinv e , --alpha e , --nclasses 4 -o tlr -f m , --bootstrap 100] 
+
+  raxml, _default:
+    app: raxml
+    parameters: [_bootstrap alrt , _method GAMMA , _aa, _model JTT , _model, _suffix -f d -p 31416]
+
+  raxml, _default, _bootstrap:
+    app: raxml
+    parameters: [_bootstrap alrt , _method GAMMA , _aa, _model JTT , _model, _suffix -f d -p 31416 , _bootstrap 100]
+
+  iqtree, _default:
+    app: iqtree
+    parameters: [-alrt 1000 -seed 31416]
+
+  iqtree, _bestmodel:
+    app: iqtree
+    parameters: [-alrt 1000 -seed 31416 -m TESTNEWONLY]
+
+  iqtree, _codon, _default:
+    app: iqtree
+    parameters: [-alrt 1000 -seed 31416 -st CODON]
+
+  iqtree, _codon, _bestmodel:
+    app: iqtree
+    parameters: [-alrt 1000 -seed 31416 -st CODON -m TEST]
+
+  iqtree, _C10:
+    app: iqtree
+    parameters: [-alrt 1000 -seed 31416 -m C10]
+
+
+  iqtree, _C30:
+    app: iqtree
+    parameters: [-alrt 1000 -seed 31416 -m C30]
+
+
+  iqtree, _C60:
+    app: iqtree
+    parameters: [-alrt 1000 -seed 31416 -m C60]
+
+  treebest, _ensembl:
+    app: phyml
+    parameters: [_aa, _model JTT , _nt, _model GTR , --no, _memory, _check , --quiet , --pinv e , --alpha e , --nclasses 4 -o tlr -f m , --bootstrap -2 ]
+
+  sptree, _dummy:
+    app: supermatrix
+    parameters: [_cog, _selector @cog, _dummy , _alg, _concatenator @alg, _concat, _default , _aa, _tree, _builder @fasttree, _default , _nt, _tree, _builder @fasttree, _default , _appset @builtin, _apps]
+
+  cog, _dummy:
+    app: cogselector
+    parameters: [_species, _missing, _factor  0.50 , _max, _species, _missing, _factor 0.60 , _max, _cogs 4]
+
+  alg, _concat, _default:
+    app: concatalg
+    parameters: [_default, _aa, _model JTT , _default, _nt, _model GTR]
+
+  cog, _all:
+    app: cogselector
+    parameters: [_species, _missing, _factor 1.0 , _max, _species, _missing, _factor 1.0 , _max, _cogs 999999]
+
+  cog, _100:
+    app: cogselector
+    parameters: [_species, _missing, _factor 0 , _max, _species, _missing, _factor 0 , _max, _cogs 999999]
+
+  cog, _95:
+    app: cogselector
+    parameters: [_species, _missing, _factor 0.05 , _max, _species, _missing, _factor 0.07 , _max, _cogs 999999]
+
+  cog, _90:
+    app: cogselector
+    parameters: [_species, _missing, _factor 0.10 , _max, _species, _missing, _factor 0.15 , _max, _cogs 999999]
+
+  cog, _85:
+    app: cogselector
+    parameters: [_species, _missing, _factor 0.15 , _max, _species, _missing, _factor 0.20 , _max, _cogs 999999]
+
+
+  splitter, _default:
+    app: treesplitter
+    parameters: [_max, _outgroup, _size 10% , _min, _outgroup, _support 0.90 , _outgroup, _topology, _dist False , _first, _split midpoint]
