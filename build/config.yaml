@@ -136,6 +136,7 @@ predefined:
 
   tcoffee_default:
     app: tcoffee
+    parameters: []
 
   mcoffee_ensembl:
     app: tcoffee
@@ -195,7 +196,7 @@ predefined:
 
   prottest_default:
     app: prottest
-    parameters: [_lk_mode "phyml" , _models "JTT", "WAG", "VT", "LG", "MtREV", -f m, --pinv e, --alpha e, --nclasses 4, --no_memory_check, --quiet]
+    parameters: [_lk_mode "phyml" , _models ["JTT", "WAG", "VT", "LG", "MtREV"], -f m, --pinv e, --alpha e, --nclasses 4, --no_memory_check, --quiet]
 
   pmodeltest_full_ultrafast:
     app: pmodeltest
@@ -211,15 +212,15 @@ predefined:
 
   pmodeltest_soft_ultrafast:
     app: pmodeltest
-    parameters: [_aa_models "JTT,WAG,VT,LG,MtREV", _nt_models "GTR" , --fast , --noinv , --nogam]
+    parameters: [_aa_models ["JTT,WAG,VT,LG,MtREV"], _nt_models "GTR" , --fast , --noinv , --nogam]
 
   pmodeltest_soft_fast:
     app: pmodeltest
-    parameters: [_aa_models "JTT,WAG,VT,LG,MtREV", _nt, _models "GTR" , --fast]
+    parameters: [_aa_models ["JTT,WAG,VT,LG,MtREV"], _nt, _models "GTR" , --fast]
 
   pmodeltest_soft_slow:
     app: pmodeltest
-    parameters: [_aa_models "JTT,WAG,VT,LG,MtREV", _nt_models "GTR"]
+    parameters: [_aa_models ["JTT,WAG,VT,LG,MtREV"], _nt_models "GTR"]
 
   bionj_default:
     app: phyml
