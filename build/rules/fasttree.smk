@@ -1,18 +1,11 @@
 name='fasttree'
 
-def get_suffix(name):
-    idx=config['work'].index(name)
-    return  ("." + config['work'][(idx-1)] if idx > 0 else '')
-
-suffix = get_suffix(name)
-
 rule fasttree:
     input:
-        "{SAMPLES}" + suffix
+        "{SAMPLES}" + config['metadata'][name]['isuffix']
     output:
-        "{SAMPLES}." + name
+        "{SAMPLES}" + config['metadata'][name]['osuffix']
     params:
-        app=config[name]['app'],
-        parameters=config[name]['parameters']
+        parameters=config['metadata'][name]['parameters']
     shell:
-        '{params.app} {params.parameters} {input} > {output}'
+        './bin/FastTree {params.parameters} {input} > {output}'

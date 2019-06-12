@@ -1,19 +1,11 @@
 name='muscle'
-
-def get_suffix(name):
-    idx=config['work'].index(name)
-    return  ("." + config['work'][(idx-1)] if idx > 0 else '')
-
-suffix = get_suffix(name)
-
-
+config['metadata'][name]['isuffix']='.metaligner'
 rule muscle:
     input:
-        "{SAMPLES}" + suffix
+        {SAMPLES} + config['metadata'][name]['isuffix']
     output:
-        "{SAMPLES}." + name
+        {SAMPLES} + config['metadata'][name]['osuffix']
     params:
-        app=config[name]['app'],
-        parameters=config[name]['parameters']
+        parameters=config['metadata'][name]['parameters']
     shell:
-        '{params.app} -in {input} -out {output} {params.parameters}'
+        './bin/muscle -in {input} -out {output} {params.parameters}'

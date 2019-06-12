@@ -3,8 +3,9 @@
 
 import os
 configfile: "config.yaml"
+config['metadata'] = {}
 
-
+    
 #just for testing while developing
 dirname=".test"
 try:
@@ -18,37 +19,74 @@ except FileExistsError:
 config['work'] = config["work"].split(",") if type(config['work']) == str else config['work']
 print("Work input:", config['work']) 
 
-#Check, translate and load predefined workflows from configfile
+#Check, translate and load workflows workflows from configfile
 expand_flag=True
+input_suffix=''
 while expand_flag == True:
     expand_flag = False
     work = []
+    
     for i in config['work']:
-        
-        #If there is a predefined workflow
-        if config['predefined'].get(i) != None:
+#         print('work:', config['work']) -------------------------------------------
+#         print(i)-------------------------------------------------------------------
+        #If it is a workflow
+        if config['workflows'].get(i) != None:
             expand_flag = True
             
-            #If it configures an app
-            if type(config['predefined'][i]) == dict:
-                work.append(config['predefined'][i]['app'])
-                app= config['predefined'][i]['app']   
-                config[app]['parameters'] = config['predefined'][i]['parameters']
+            #If it configures an rule
+            if type(config['workflows'][i]) == dict:
+                rulename = config['workflows'][i]['rule']
+                work.append(rulename)
+                if i not in config['metadata']:
+                    config['metadata'][rulename] = {}
+                    config['metadata'][rulename]['parameters']=config['workflows'][i]['parameters']
+                    config['metadata'][rulename]['isuffix']=input_suffix
+                    config['metadata'][rulename]['osuffix']='.'+rulename
+                    input_suffix="." + rulename
+                    
             
-            #If it contains other predefined workflows
-            elif type(config['predefined'][i]) == list:
-                work += config['predefined'][i]
+            #If it contains other workflows
+            elif type(config['workflows'][i]) == list:
+                
+
+                #if metaligner [[]]
+                if len(config['workflows'][i]) == 1 and type(config['workflows'][i][0]) == list:
+                    nxt_sffx=[]
+                    for j in config['workflows'][i][0][0]:
+#                         print(j)---------------------------------------------------------------------------------
+                        
+                        rulename = config['workflows'][j]['rule']
+                        work.append(rulename)
+                        config['metadata'][rulename] = {}
+                        config['metadata'][rulename]['parameters']=config['workflows'][j]['parameters']
+                        config['metadata'][rulename]['isuffix']=input_suffix
+                        config['metadata'][rulename]['osuffix']='.'+rulename+'.metaligner'
+                        nxt_sffx.append('.'+rulename+'.metaligner')
+                    
+                    input_suffix=nxt_sffx
+                    
+                #not metaligner []
+                else:
+                    work += config['workflows'][i]
+                    
         
-        #If it is not a predefined workflow
+        #If it is another thing
         else:
             work.append(i)
+            if i not in config['metadata']:
+                config['metadata'][i] = {}
+                config['metadata'][i]['parameters']=[]
+                config['metadata'][i]['isuffix']=input_suffix
+                config['metadata'][i]['osuffix']='.'+i
+                input_suffix='.'+i
+                
     config['work'] = work
-    
+
 
 #output translated work configuration    
 print("Work to do:", config['work'])
 for i in config['work']:
-    print(i, "parameters:", config[i]['parameters']) 
+    print(i, "parameters:", config['metadata'][i]['parameters']) 
 
 
 #Load required rules
@@ -57,9 +95,9 @@ for i in config['work']:
         include: "rules/" + i + ".smk"      
 
 
+SAMPLES = config['in']
 
-SAMPLES=config['in']
 
 rule all:
     input:
-        expand("{sample}.{suffix}",sample=SAMPLES,suffix=config['work'][-1])
+        expand("{sample}{suffix}",sample=SAMPLES,suffix=input_suffix)

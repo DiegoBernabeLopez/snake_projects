@@ -1,18 +1,11 @@
 name='phyml'
 
-def get_suffix(name):
-    idx=config['work'].index(name)
-    return  ("." + config['work'][(idx-1)] if idx > 0 else '')
-
-suffix = get_suffix(name)
-
 rule phyml:
     input:
-        "{SAMPLES}" + suffix
+        "{SAMPLES}" + config['metadata'][name]['suffix']
     output:
         "{SAMPLES}." + name
     params:
-        app=config[name]['app'],
-        parameters=config[name]['parameters']
+        parameters=config['metadata'][name]['parameters']
     shell:
-        '{params.app} -i {input} {params.parameters} > {output}'
+        './bin/phyml -i {input} {params.parameters} > {output}'

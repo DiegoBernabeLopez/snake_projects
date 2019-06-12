@@ -1,19 +1,11 @@
 name='trimal'
 
-def get_suffix(name):
-    idx=config['work'].index(name)
-    return  ("." + config['work'][(idx-1)] if idx > 0 else '')
-
-suffix = get_suffix(name)
-
-
 rule trimal:
     input:
-        "{SAMPLES}" + suffix
+        "{SAMPLES}" + config['metadata'][name]['suffix']
     output:
         "{SAMPLES}." + name
     params:
-        app=config[name]['app'],
-        parameters=config[name]['parameters']
+        parameters=config['metadata'][name]['parameters']
     shell:
-        '{params.app} -in {input} -out {output} {params.parameters}'
+        './bin/trimal -in {input} -out {output} {params.parameters}'
