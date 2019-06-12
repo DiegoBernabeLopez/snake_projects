@@ -27,8 +27,6 @@ while expand_flag == True:
     work = []
     
     for i in config['work']:
-#         print('work:', config['work']) -------------------------------------------
-#         print(i)-------------------------------------------------------------------
         #If it is a workflow
         if config['workflows'].get(i) != None:
             expand_flag = True
@@ -53,7 +51,6 @@ while expand_flag == True:
                 if len(config['workflows'][i]) == 1 and type(config['workflows'][i][0]) == list:
                     nxt_sffx=[]
                     for j in config['workflows'][i][0][0]:
-#                         print(j)---------------------------------------------------------------------------------
                         
                         rulename = config['workflows'][j]['rule']
                         work.append(rulename)
