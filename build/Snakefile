@@ -25,9 +25,9 @@ input_suffix=''
 while expand_flag == True:
     expand_flag = False
     work = []
-    print('work:', config['work'])
+
     for i in config['work']:
-        print(i)
+        
         #if metaligner [[]]
         if len(i) > 1 and type(i[0]) == str and type(i) == list:
             nxt_sffx=[]

@@ -6,9 +6,6 @@ workflows:
     
   ### WORKFLOWS  ###
   
-  #test metaworkflow
-  metaligner: [[clustalo_default, fasttree_default]]
-  
   #Genetree meta workflows
   phylomedb4: [metaligner_phylomedb, trimal01, prottest_default, phyml_default]
   eggnog41: [metaligner_trimmed, trimal01]
@@ -61,20 +58,15 @@ workflows:
   sptree_iqtreeC10_all: [cog_all, alg_concat_default, iqtree_C10]
   sptree_iqtree_all: [cog_all, alg_concat_default, iqtree_default]
 
+  #Metaligners
+  metaligner_phylomedb: [[muscle_default, mafft_default, clustalo_default, dialigntx_default]] # _alg_trimming True
+  metaligner_trimmed: : [[muscle_default, mafft_default, clustalo_default]] # _alg_trimming True
+  metaligner_default: [[muscle_default, mafft_default, clustalo_default]] # _alg_trimming False
+  
   
   ### APP CONFIG ###
   
-  metaligner_phylomedb:
-    rule: metaligner
-    parameters: [_alg_trimming True , _aligners @muscle_default @mafft_default @clustalo_default @dialigntx_default]
 
-  metaligner_trimmed:
-    rule: metaligner
-    parameters: [_alg_trimming True, _aligners @muscle_default @mafft_default @clustalo_default]
-
-  metaligner_default:
-    rule: metaligner
-    parameters: [_alg_trimming False , _aligners @muscle_default @mafft_default @clustalo_default]
 
   tcoffee_default:
     rule: tcoffee
