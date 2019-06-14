@@ -5,7 +5,10 @@ work: standard_fasttree
 workflows:
     
   ### WORKFLOWS  ###
-  metaligner: [[[clustalo_default, fasttree_default]]]
+  
+  #test metaworkflow
+  metaligner: [[clustalo_default, fasttree_default]]
+  
   #Genetree meta workflows
   phylomedb4: [metaligner_phylomedb, trimal01, prottest_default, phyml_default]
   eggnog41: [metaligner_trimmed, trimal01]
@@ -257,6 +260,7 @@ workflows:
   splitter_default:
     rule: treesplitter
     parameters: [_max_outgroup_size 10%, _min_outgroup_support 0.90, _outgroup_topology_dist False_first_split midpoint]
+
 
 
 

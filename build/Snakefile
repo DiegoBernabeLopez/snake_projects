@@ -25,8 +25,26 @@ input_suffix=''
 while expand_flag == True:
     expand_flag = False
     work = []
-    
+    print('work:', config['work'])
     for i in config['work']:
+        print(i)
+        #if metaligner [[]]
+        if len(i) > 1 and type(i[0]) == str and type(i) == list:
+            nxt_sffx=[]
+            for j in i:
+                print(j)
+                rulename = config['workflows'][j]['rule']
+                work.append(rulename)
+                config['metadata'][rulename] = {}
+                config['metadata'][rulename]['parameters']=config['workflows'][j]['parameters']
+                config['metadata'][rulename]['isuffix']=input_suffix
+                config['metadata'][rulename]['osuffix']='.'+rulename+'.metaligner'
+                nxt_sffx.append('.'+rulename+'.metaligner')
+            
+            input_suffix=nxt_sffx
+            continue
+    
+    
         #If it is a workflow
         if config['workflows'].get(i) != None:
             expand_flag = True
@@ -45,26 +63,8 @@ while expand_flag == True:
             
             #If it contains other workflows
             elif type(config['workflows'][i]) == list:
-                
 
-                #if metaligner [[]]
-                if len(config['workflows'][i]) == 1 and type(config['workflows'][i][0]) == list:
-                    nxt_sffx=[]
-                    for j in config['workflows'][i][0][0]:
-                        
-                        rulename = config['workflows'][j]['rule']
-                        work.append(rulename)
-                        config['metadata'][rulename] = {}
-                        config['metadata'][rulename]['parameters']=config['workflows'][j]['parameters']
-                        config['metadata'][rulename]['isuffix']=input_suffix
-                        config['metadata'][rulename]['osuffix']='.'+rulename+'.metaligner'
-                        nxt_sffx.append('.'+rulename+'.metaligner')
-                    
-                    input_suffix=nxt_sffx
-                    
-                #not metaligner []
-                else:
-                    work += config['workflows'][i]
+                work += config['workflows'][i]
                     
         
         #If it is another thing

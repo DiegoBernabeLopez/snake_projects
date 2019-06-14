@@ -2,9 +2,9 @@ name='phyml'
 
 rule phyml:
     input:
-        "{SAMPLES}" + config['metadata'][name]['suffix']
+        "{SAMPLES}" + config['metadata'][name]['isuffix']
     output:
-        "{SAMPLES}." + name
+        "{SAMPLES}" + config['metadata'][name]['osuffix']
     params:
         parameters=config['metadata'][name]['parameters']
     shell:
