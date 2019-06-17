@@ -5,7 +5,7 @@ work: standard_fasttree
 workflows:
     
   ### WORKFLOWS  ###
-  
+   
   #Genetree meta workflows
   phylomedb4: [metaligner_phylomedb, trimal01, prottest_default, phyml_default]
   eggnog41: [metaligner_trimmed, trimal01]
@@ -60,7 +60,7 @@ workflows:
 
   #Metaligners
   metaligner_phylomedb: [[muscle_default, mafft_default, clustalo_default, dialigntx_default]] # _alg_trimming True
-  metaligner_trimmed: : [[muscle_default, mafft_default, clustalo_default]] # _alg_trimming True
+  metaligner_trimmed: [[muscle_default, mafft_default, clustalo_default]] # _alg_trimming True
   metaligner_default: [[muscle_default, mafft_default, clustalo_default]] # _alg_trimming False
   
   

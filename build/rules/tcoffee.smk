@@ -1,8 +1,8 @@
 name='tcoffee'
-
+print(config['metadata'][name]['isuffix'])
 rule tcoffee:
     input:
-        expand("{sample}{suffix}",sample=config['in'],suffix=config['metadata'][name]['isuffix'])
+        expand("{{SAMPLES}}{suffix}",suffix=config['metadata'][name]['isuffix'])
     output:
         "{SAMPLES}" + config['metadata'][name]['osuffix']
     params:
