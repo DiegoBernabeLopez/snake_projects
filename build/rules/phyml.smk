@@ -1,7 +1,7 @@
 name='phyml'
 
 rule phyml:
-    input:
+    input: 
         "{SAMPLES}" + config['metadata'][name]['isuffix']
     output:
         "{SAMPLES}" + config['metadata'][name]['osuffix']

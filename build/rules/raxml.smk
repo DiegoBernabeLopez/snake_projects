@@ -1,10 +1,10 @@
 name='raxml'
 
 rule raxml:
-    input:
-        "{SAMPLES}" + config['metadata'][name]['suffix']
+    input: 
+        "{SAMPLES}" + config['metadata'][name]['isuffix']
     output:
-        "{SAMPLES}." + name
+        "{SAMPLES}" + config['metadata'][name]['osuffix']
     params:
         parameters=config['metadata'][name]['parameters']
     shell:

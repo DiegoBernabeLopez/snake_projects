@@ -1,86 +1,83 @@
 # As standard, snakemake workflows execute this snakefile who imports all necesary rules by include command.
-# Rule all is executed which causes the workflow to generate all the files under all rule input statement.
+# Rule all is executed which causes the workflow to generate all the files under "all" rule input statement.
+
+### DEPENDENCIES ###
 
 import os
 configfile: "config.yaml"
 config['metadata'] = {}
 
-    
-#just for testing while developing
-dirname=".test"
-try:
-    os.mkdir(dirname)
-    print("Directory " , dirname ,  " Created ") 
-except FileExistsError:
-    print("Directory " , dirname ,  " already exists")
 
+### FUNCTIONS ###
+
+#Check, translate and load workflows workflows from configfile
+def parser(to_do):
+    expand_flag=True
+    config['metadata']['input_suffix']=''
+    while expand_flag == True:
+        expand_flag = False
+        work = []
+
+        for i in to_do:
+            #if metaligner [[]]
+            if len(i) > 1 and type(i[0]) == str and type(i) == list:
+                nxt_sffx=[]
+                for j in i:
+                    rulename = config['workflows'][j]['rule']
+                    work.append(rulename)
+                    config['metadata'][rulename] = {}
+                    config['metadata'][rulename]['parameters']=config['workflows'][j]['parameters']
+                    config['metadata'][rulename]['isuffix']=config['metadata']['input_suffix']
+                    config['metadata'][rulename]['osuffix']='.'+rulename+'.metaligner'
+                    nxt_sffx.append('.'+rulename+'.metaligner')
+
+                config['metadata']['input_suffix']=nxt_sffx
+                config['work'] = work
+                continue
+
+            #If it is a workflow
+            if config['workflows'].get(i) != None:
+                expand_flag = True
+
+                #If it configures an rule
+                if type(config['workflows'][i]) == dict:
+                    rulename = config['workflows'][i]['rule']
+                    work.append(rulename)
+                    if i not in config['metadata']:
+                        config['metadata'][rulename] = {}
+                        config['metadata'][rulename]['parameters']=config['workflows'][i]['parameters']
+                        config['metadata'][rulename]['isuffix']=config['metadata']['input_suffix']
+                        config['metadata'][rulename]['osuffix']='.'+rulename
+                        config['metadata']['input_suffix']="." + rulename
+
+                #If it contains other workflows
+                elif type(config['workflows'][i]) == list:
+                    work += parser(config['workflows'][i])
+
+            #If it is another thing
+            else:
+                work.append(i)
+                if i not in config['metadata']:
+                    config['metadata'][i] = {}
+                    config['metadata'][i]['parameters']=[]
+                    config['metadata'][i]['isuffix']=config['metadata']['input_suffix']
+                    config['metadata'][i]['osuffix']='.'+i
+                    config['metadata'][input_suffix]='.'+i
+
+        to_do = work
+    return(to_do)
+
+
+
+
+### CORE ###
 
 #Parse work configuration
 config['work'] = config["work"].split(",") if type(config['work']) == str else config['work']
 print("Work input:", config['work']) 
 
-#Check, translate and load workflows workflows from configfile
-expand_flag=True
-input_suffix=''
-while expand_flag == True:
-    expand_flag = False
-    work = []
-
-    for i in config['work']:
-        
-        #if metaligner [[]]
-        if len(i) > 1 and type(i[0]) == str and type(i) == list:
-            nxt_sffx=[]
-            for j in i:
-                print(j)
-                rulename = config['workflows'][j]['rule']
-                work.append(rulename)
-                config['metadata'][rulename] = {}
-                config['metadata'][rulename]['parameters']=config['workflows'][j]['parameters']
-                config['metadata'][rulename]['isuffix']=input_suffix
-                config['metadata'][rulename]['osuffix']='.'+rulename+'.metaligner'
-                nxt_sffx.append('.'+rulename+'.metaligner')
-            
-            input_suffix=nxt_sffx
-            continue
-    
-    
-        #If it is a workflow
-        if config['workflows'].get(i) != None:
-            expand_flag = True
-            
-            #If it configures an rule
-            if type(config['workflows'][i]) == dict:
-                rulename = config['workflows'][i]['rule']
-                work.append(rulename)
-                if i not in config['metadata']:
-                    config['metadata'][rulename] = {}
-                    config['metadata'][rulename]['parameters']=config['workflows'][i]['parameters']
-                    config['metadata'][rulename]['isuffix']=input_suffix
-                    config['metadata'][rulename]['osuffix']='.'+rulename
-                    input_suffix="." + rulename
-                    
-            
-            #If it contains other workflows
-            elif type(config['workflows'][i]) == list:
-
-                work += config['workflows'][i]
-                    
-        
-        #If it is another thing
-        else:
-            work.append(i)
-            if i not in config['metadata']:
-                config['metadata'][i] = {}
-                config['metadata'][i]['parameters']=[]
-                config['metadata'][i]['isuffix']=input_suffix
-                config['metadata'][i]['osuffix']='.'+i
-                input_suffix='.'+i
-                
-    config['work'] = work
-
-
-#output translated work configuration    
+#output translate and print work configuration
+config['work']=parser(config['work'])
 print("Work to do:", config['work'])
 for i in config['work']:
     print(i, "parameters:", config['metadata'][i]['parameters']) 
@@ -97,4 +94,4 @@ SAMPLES = config['in']
 
 rule all:
     input:
-        expand("{sample}{suffix}",sample=SAMPLES,suffix=input_suffix)
+        expand("{sample}{suffix}",sample=SAMPLES,suffix=config['metadata']['input_suffix'])
