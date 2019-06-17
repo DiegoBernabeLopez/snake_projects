@@ -1,5 +1,5 @@
 name='trimal'
-print("suffix: (",config['metadata'][name]['isuffix'],")")
+
 rule trimal:
     input: 
         "{SAMPLES}" + config['metadata'][name]['isuffix']

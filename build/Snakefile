@@ -12,59 +12,55 @@ config['metadata'] = {}
 
 #Check, translate and load workflows workflows from configfile
 def parser(to_do):
-    expand_flag=True
     config['metadata']['input_suffix']=''
-    while expand_flag == True:
-        expand_flag = False
-        work = []
+    work = []
 
-        for i in to_do:
-            #if metaligner [[]]
-            if len(i) > 1 and type(i[0]) == str and type(i) == list:
-                nxt_sffx=[]
-                for j in i:
-                    rulename = config['workflows'][j]['rule']
-                    work.append(rulename)
-                    config['metadata'][rulename] = {}
-                    config['metadata'][rulename]['parameters']=config['workflows'][j]['parameters']
-                    config['metadata'][rulename]['isuffix']=config['metadata']['input_suffix']
-                    config['metadata'][rulename]['osuffix']='.'+rulename+'.metaligner'
-                    nxt_sffx.append('.'+rulename+'.metaligner')
+    for i in to_do:
+        #if metaligner [[]]
+        if len(i) > 1 and type(i[0]) == str and type(i) == list:
+            nxt_sffx=[]
+            for j in i:
+                rulename = config['workflows'][j]['rule']
+                work.append(rulename)
+                config['metadata'][rulename] = {}
+                config['metadata'][rulename]['parameters']=config['workflows'][j]['parameters']
+                config['metadata'][rulename]['isuffix']=config['metadata']['input_suffix']
+                config['metadata'][rulename]['osuffix']='.'+rulename+'.metaligner'
+                nxt_sffx.append('.'+rulename+'.metaligner')
 
-                config['metadata']['input_suffix']=nxt_sffx
-                continue
+            config['metadata']['input_suffix']=nxt_sffx
+            continue
 
-            #If it is a workflow
-            if config['workflows'].get(i) != None:
-                expand_flag = True
+        #If it is a workflow
+        if config['workflows'].get(i) != None:
+            expand_flag = True
 
-                #If it configures an rule
-                if type(config['workflows'][i]) == dict:
-                    rulename = config['workflows'][i]['rule']
-                    work.append(rulename)
-                    if i not in config['metadata']:
-                        config['metadata'][rulename] = {}
-                        config['metadata'][rulename]['parameters']=config['workflows'][i]['parameters']
-                        config['metadata'][rulename]['isuffix']=config['metadata']['input_suffix']
-                        config['metadata'][rulename]['osuffix']='.'+rulename
-                        config['metadata']['input_suffix']="." + rulename
-
-                #If it contains other workflows
-                elif type(config['workflows'][i]) == list:
-                    work += parser(config['workflows'][i])
-
-            #If it is another thing
-            else:
-                work.append(i)
+            #If it configures an rule
+            if type(config['workflows'][i]) == dict:
+                rulename = config['workflows'][i]['rule']
+                work.append(rulename)
                 if i not in config['metadata']:
-                    config['metadata'][i] = {}
-                    config['metadata'][i]['parameters']=[]
-                    config['metadata'][i]['isuffix']=config['metadata']['input_suffix']
-                    config['metadata'][i]['osuffix']='.'+i
-                    config['metadata'][input_suffix]='.'+i
+                    config['metadata'][rulename] = {}
+                    config['metadata'][rulename]['parameters']=config['workflows'][i]['parameters']
+                    config['metadata'][rulename]['isuffix']=config['metadata']['input_suffix']
+                    config['metadata'][rulename]['osuffix']='.'+rulename
+                    config['metadata']['input_suffix']="." + rulename
+            #If it contains other workflows
+            elif type(config['workflows'][i]) == list:
+                #Recursive parse
+                work += parser(config['workflows'][i])
 
-        to_do = work
-    return(to_do)
+        #If it is another thing
+        else:
+            work.append(i)
+            if i not in config['metadata']:
+                config['metadata'][i] = {}
+                config['metadata'][i]['parameters']=[]
+                config['metadata'][i]['isuffix']=config['metadata']['input_suffix']
+                config['metadata'][i]['osuffix']='.'+i
+                config['metadata'][input_suffix]='.'+i
+
+    return(work)
 
 
 
@@ -77,6 +73,7 @@ print("Work input:", config['work'])
 
 #output translate and print work configuration
 config['work']=parser(config['work'])
+
 print("Work to do:", config['work'])
 for i in config['work']:
     print(i, "parameters:", config['metadata'][i]['parameters']) 
@@ -93,4 +90,4 @@ SAMPLES = config['in']
 
 rule all:
     input:
-        expand("{sample}{suffix}",sample=SAMPLES,suffix=config['metadata']['input_suffix'])
+        expand("{sample}{suffix}",sample=config['in'],suffix=config['metadata']['input_suffix'])
