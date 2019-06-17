@@ -32,7 +32,6 @@ def parser(to_do):
                     nxt_sffx.append('.'+rulename+'.metaligner')
 
                 config['metadata']['input_suffix']=nxt_sffx
-                config['work'] = work
                 continue
 
             #If it is a workflow
