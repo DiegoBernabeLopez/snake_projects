@@ -59,9 +59,9 @@ workflows:
   sptree_iqtree_all: [cog_all, alg_concat_default, iqtree_default]
 
   #Metaligners
-  metaligner_phylomedb: [[muscle_default, mafft_default, clustalo_default, dialigntx_default]] # _alg_trimming True
-  metaligner_trimmed: [[muscle_default, mafft_default, clustalo_default]] # _alg_trimming True
-  metaligner_default: [[muscle_default, mafft_default, clustalo_default]] # _alg_trimming False
+  metaligner_phylomedb: [[muscle_default, mafft_default, clustalo_default, dialigntx_default]] 
+  metaligner_trimmed: [[muscle_default, mafft_default, clustalo_default],mcoffee_default,trimal01] 
+  metaligner_default: [[muscle_default, mafft_default, clustalo_default],tcoffee_default] 
   
   
   ### APP CONFIG ###
@@ -74,7 +74,7 @@ workflows:
 
   mcoffee_ensembl:
     rule: tcoffee
-    parameters: [-method "mafftgins_msa,muscle_msa,kalign_msa,t_coffee_msa" -mode mcoffee]
+    parameters: [-method mafftgins_msa muscle_msa kalign_msa t_coffee_msa, -mode mcoffee]
 
   trimal001:
     rule: trimal

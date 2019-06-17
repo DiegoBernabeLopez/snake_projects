@@ -1,5 +1,5 @@
 name='tcoffee'
-print(config['metadata'][name]['isuffix'])
+
 rule tcoffee:
     input:
         expand("{{SAMPLES}}{suffix}",suffix=config['metadata'][name]['isuffix'])
@@ -8,4 +8,4 @@ rule tcoffee:
     params:
         parameters=config['metadata'][name]['parameters']
     shell:
-        './bin/t_coffee {params.parameters} {input} > {output}'
+        './bin/t_coffee {input} {params.parameters} > {output}'
