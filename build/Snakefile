@@ -85,9 +85,6 @@ for i in config['work']:
         include: "rules/" + i + ".smk"      
 
 
-SAMPLES = config['in']
-
-
 rule all:
     input:
         expand("{sample}{suffix}",sample=config['in'],suffix=config['metadata']['input_suffix'])

@@ -177,7 +177,7 @@ workflows:
 
   raxml_default:
     rule: raxml
-    parameters: [_bootstrap alrt, _method GAMMA, _aa_model JTT, _model_suffix, -f d, -p 31416]
+    parameters: [-m GTRGAMMA, -f d, -p 31416]
 
   raxml_default_bootstrap:
     rule: raxml
