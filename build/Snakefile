@@ -54,11 +54,7 @@ def parser(to_do):
         else:
             work.append(i)
             if i not in config['metadata']:
-                config['metadata'][i] = {}
-                config['metadata'][i]['parameters']=[]
-                config['metadata'][i]['isuffix']=config['metadata']['input_suffix']
-                config['metadata'][i]['osuffix']='.'+i
-                config['metadata'][input_suffix]='.'+i
+                raise Exception(i, 'is not defined in configfile, please use previously defined workflows or define new ones')
 
     return(work)
 

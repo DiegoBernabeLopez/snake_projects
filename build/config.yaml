@@ -1,4 +1,4 @@
-in: [.test/test1.fa,.test/test2.fa]
+in: [.test/test1.fa]
 
 work: phylomedb4
 
