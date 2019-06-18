@@ -54,7 +54,7 @@ def parser(to_do):
         else:
             work.append(i)
             if i not in config['metadata']:
-                raise Exception(i, 'is not defined in configfile, please use previously defined workflows or define new ones')
+                raise Exception('%s is not defined in configfile, please use previously defined workflows or define new one' % i)
 
     return(work)
 

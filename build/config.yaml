@@ -1,6 +1,6 @@
-in: [.test/test1.fa]
+in: [.test/NUP62.fa,.test/NUP63.fa]
 
-work: phylomedb4
+work: standard_fasttree
 
 workflows:
     
